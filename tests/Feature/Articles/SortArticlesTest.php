@@ -44,39 +44,56 @@ class SortArticlesTest extends TestCase
     // }
 
 
-    public function it_can_articles_by_title_and_content()
+    // public function it_can_articles_by_title_and_content()
+    // {
+    //     factory(Article::class)->create([
+    //         'title' =>  'C Title',
+    //         'content' => 'B Content'
+    //         ]); 
+    //     factory(Article::class)->create([
+    //         'title' =>  'A Title',
+    //         'content' => 'A Content'
+    //         ]); 
+    //     factory(Article::class)->create([
+    //         'title' =>  'B Title',
+    //         'content' => 'C Content'
+    //         ]); 
+
+
+    //    $url = route('api.v1.articles.index').'?sort=title,-content';
+      
+    //     $this->getJson($url)->assertSeeInOrder([
+    //         'A Title',
+    //         'B Title',
+    //         'C Title',
+    //     ]);
+
+
+
+    //     $url = route('api.v1.articles.index').'?sort=-content,title';
+      
+    //     $this->getJson($url)->assertSeeInOrder([
+    //         'C Content',
+    //         'B Content',
+    //         'A Content',
+    //     ]);
+
+    // }
+
+
+    public function it_cannot_articles_by_title_unkonw_fields()
     {
-        factory(Article::class)->create([
-            'title' =>  'C Title',
-            'content' => 'B Content'
-            ]); 
-        factory(Article::class)->create([
-            'title' =>  'A Title',
-            'content' => 'A Content'
-            ]); 
-        factory(Article::class)->create([
-            'title' =>  'B Title',
-            'content' => 'C Content'
-            ]); 
+        factory(Article::class)->times(3)->create();
 
 
-       $url = route('api.v1.articles.index').'?sort=title,-content';
+       $url = route('api.v1.articles.index').'?sort=Unknow';
       
-        $this->getJson($url)->assertSeeInOrder([
-            'A Title',
-            'B Title',
-            'C Title',
-        ]);
-
-
-
-        $url = route('api.v1.articles.index').'?sort=-content,title';
-      
-        $this->getJson($url)->assertSeeInOrder([
-            'C Content',
-            'B Content',
-            'A Content',
-        ]);
+        $this->getJson($url)->assertStatus(400);
 
     }
+
+
+
+
+
 }

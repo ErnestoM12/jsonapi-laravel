@@ -14,14 +14,6 @@ class ArticleController extends Controller
 
     function index(Article $article){
        
-       //-title  single
-      // $direction = 'asc';
-      //     $sortField = request('sort');
-      //    if(Str::of($sortField)->startsWith('-')){
-      //     $direction = 'desc';
-      //     $sortField = Str::of($sortField)->substr(1);
-      //    }
-       //two or more params
       $sortFields = Str::of(request('sort'))->explode(',');
       $articleQuery = Article::query();
 
@@ -37,14 +29,9 @@ class ArticleController extends Controller
 
 
       
+       $artices =  Article::applySorts('sort')->get();
 
-
-        return ArticleCollection::make(
-            //single param
-            //Article::orderBy($sortField,$direction)->get()
-            //two or more
-            $articleQuery->get()
-        );
+        return ArticleCollection::make($artices);
    
        }
 
