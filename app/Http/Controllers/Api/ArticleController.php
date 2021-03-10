@@ -12,26 +12,12 @@ use Illuminate\Support\Str;
 class ArticleController extends Controller
 {
 
-    function index(Article $article){
+    function index(){
        
-      $sortFields = Str::of(request('sort'))->explode(',');
-      $articleQuery = Article::query();
+        $articles = Article::applySorts()
+        ->jsonPaginate() 
 
-        foreach($sortFields as $sortField){
-            $direction = 'asc';
-
-            if(Str::of($sortField)->startsWith('-')){
-                $direction = 'desc';
-                $sortField = Str::of($sortField)->substr(1);
-            } 
-            $articleQuery->orderBy($sortField,$direction);  
-        }
-
-
-      
-       $artices =  Article::applySorts('sort')->get();
-
-        return ArticleCollection::make($artices);
+        return ArticleCollection::make($articles);
    
        }
 

@@ -22,7 +22,7 @@ class ListaArticlesTest extends TestCase
     
     //  $response = $this->getJson(route('api.v1.articles.index'));
     
-    //  $response->assertExactJson([
+    //  $response->assertJsonFragmnet([
     //      'data' => [
     //      [ 
     //         'type' => 'articles',
@@ -60,14 +60,7 @@ class ListaArticlesTest extends TestCase
     //            'self' => route('api.v1.articles.show', $articles[2])
     //         ]
     //     ],  
-    // ],
-    // 'links' => [
-    //     'self' => route('api.v1.articles.index')
-    // ],
-    // 'meta' => [
-    //     'article_count' => 3
-    // ]   
-
+    // ], 
     //  ]);
 
     // }

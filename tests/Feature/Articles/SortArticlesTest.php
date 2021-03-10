@@ -81,16 +81,16 @@ class SortArticlesTest extends TestCase
     // }
 
 
-    public function it_cannot_articles_by_title_unkonw_fields()
-    {
-        factory(Article::class)->times(3)->create();
+    // public function it_cannot_sort_articles_by_title_unkonw_fields()
+    // {
+    //     factory(Article::class)->times(3)->create();
 
 
-       $url = route('api.v1.articles.index').'?sort=Unknow';
+    //    $url = route('api.v1.articles.index').'?sort=Unknow';
       
-        $this->getJson($url)->assertStatus(400);
+    //     $this->getJson($url)->assertStatus(400);
 
-    }
+    // }
 
 
 
