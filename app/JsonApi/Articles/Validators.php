@@ -40,8 +40,11 @@ class Validators extends AbstractValidators
      */
     protected function rules($record = null): array
     {
+        //comm rules laravel
         return [
-            //commun rules laravel
+            'title' => ['required'],
+            'content' => ['required'],
+            'slug' => ['required', 'unique:articles'],
         ];
     }
 
@@ -52,8 +55,7 @@ class Validators extends AbstractValidators
      */
     protected function queryRules(): array
     {
-        return [
-            //e.j page.number  => ['integer','min:1']
-        ];
+        //e.j page.number  => ['integer','min:1']
+        return [];
     }
 }
