@@ -9,7 +9,7 @@ use Throwable;
 class Handler extends ExceptionHandler
 {
 
-    use HandlesErrors; 
+    use HandlesErrors;
     /**
      * A list of the exception types that are not reported.
      *
@@ -53,11 +53,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if($this->isJsonApi($request,$exception)){
-            
-            return $this->renderJsonApi($reques, $exception);
+        if ($this->isJsonApi($request, $exception)) {
+
+            return $this->renderJsonApi($request, $exception);
         }
-        
+
         return parent::render($request, $exception);
     }
 }

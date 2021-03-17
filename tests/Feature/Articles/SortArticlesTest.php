@@ -14,29 +14,29 @@ class SortArticlesTest extends TestCase
      */
     public function it_can_articles_by_title_asc()
     {
-        factory(Article::class)->create(['title' =>  'C Title']); 
-        factory(Article::class)->create(['title' =>  'A Title']); 
-        factory(Article::class)->create(['title' =>  'B Title']); 
-       
-        $url = route('api.v1.articles.index', ['sort'=>'title']);
-        $this->getJson($url)->assertSeeInOrder([
+        factory(Article::class)->create(['title' =>  'C Title']);
+        factory(Article::class)->create(['title' =>  'A Title']);
+        factory(Article::class)->create(['title' =>  'B Title']);
+
+        $url = route('api.v1.articles.index', ['sort' => 'title']);
+        $this->jsonApi()->get($url)->assertSeeInOrder([
             'A Title',
             'B Title',
             'C Title',
         ]);
     }
 
-     /**
+    /**
      * @test
      */
     public function it_can_articles_by_title_desc()
     {
-        factory(Article::class)->create(['title' =>  'C Title']); 
-        factory(Article::class)->create(['title' =>  'A Title']); 
-        factory(Article::class)->create(['title' =>  'B Title']); 
-       
-        $url = route('api.v1.articles.index', ['sort'=>'-title']);
-        $this->getJson($url)->assertSeeInOrder([
+        factory(Article::class)->create(['title' =>  'C Title']);
+        factory(Article::class)->create(['title' =>  'A Title']);
+        factory(Article::class)->create(['title' =>  'B Title']);
+
+        $url = route('api.v1.articles.index', ['sort' => '-title']);
+        $this->jsonApi()->get($url)->assertSeeInOrder([
             'C Title',
             'B Title',
             'A Title',
@@ -49,20 +49,20 @@ class SortArticlesTest extends TestCase
         factory(Article::class)->create([
             'title' =>  'C Title',
             'content' => 'B Content'
-            ]); 
+        ]);
         factory(Article::class)->create([
             'title' =>  'A Title',
             'content' => 'A Content'
-            ]); 
+        ]);
         factory(Article::class)->create([
             'title' =>  'B Title',
             'content' => 'C Content'
-            ]); 
+        ]);
 
 
-       $url = route('api.v1.articles.index').'?sort=title,-content';
-      
-        $this->getJson($url)->assertSeeInOrder([
+        $url = route('api.v1.articles.index') . '?sort=title,-content';
+
+        $this->jsonApi()->get($url)->assertSeeInOrder([
             'A Title',
             'B Title',
             'C Title',
@@ -70,14 +70,13 @@ class SortArticlesTest extends TestCase
 
 
 
-        $url = route('api.v1.articles.index').'?sort=-content,title';
-      
-        $this->getJson($url)->assertSeeInOrder([
+        $url = route('api.v1.articles.index') . '?sort=-content,title';
+
+        $this->jsonApi()->get($url)->assertSeeInOrder([
             'C Content',
             'B Content',
             'A Content',
         ]);
-
     }
 
 
@@ -86,14 +85,8 @@ class SortArticlesTest extends TestCase
         factory(Article::class)->times(3)->create();
 
 
-       $url = route('api.v1.articles.index').'?sort=Unknow';
-      
-        $this->getJson($url)->assertStatus(400);
+        $url = route('api.v1.articles.index') . '?sort=Unknow';
 
+        $this->jsonApi()->get($url)->assertStatus(400);
     }
-
-
-
-
-
 }
