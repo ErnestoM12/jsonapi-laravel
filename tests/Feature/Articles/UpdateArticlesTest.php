@@ -15,38 +15,38 @@ class UpdateArticlesTest extends TestCase
     /**
      * @test
      */
-    // public function guests_users_cannot_update_articles()
-    // {
-    //     $article = factory(Article::class)->create();
+    public function guests_users_cannot_update_articles()
+    {
+        $article = factory(Article::class)->create();
 
-    //     $this->jsonApi()
-    //         ->patch(route('api.v1.articles.update', $article))
-    //         ->assertStatus(401);
-    // }
+        $this->jsonApi()
+            ->patch(route('api.v1.articles.update', $article))
+            ->assertStatus(401);
+    }
 
-    // public function authenticade_users_can_update_their_articles()
-    // {
-    //     $article = factory(Article::class)->create();
+    public function authenticade_users_can_update_their_articles()
+    {
+        $article = factory(Article::class)->create();
 
-    //     Sanctum::actingAs($article->user);
+        Sanctum::actingAs($article->user);
 
 
-    //     $this->jsonApi()
-    //         ->content([
-    //             'data' => [
-    //                 'type' => 'articles',
-    //                 'id' => $article->getRouteKey(),
-    //                 'attributes' => [
-    //                     'title' => 'Title Changed',
-    //                     'slug' => ' title-changed',
-    //                     'content' => 'Content changed',
-    //                 ]
-    //             ]
+        $this->jsonApi()
+            ->content([
+                'data' => [
+                    'type' => 'articles',
+                    'id' => $article->getRouteKey(),
+                    'attributes' => [
+                        'title' => 'Title Changed',
+                        'slug' => ' title-changed',
+                        'content' => 'Content changed',
+                    ]
+                ]
 
-    //         ])
-    //         ->patch(route('api.v1.articles.update', $article))
-    //         ->assertStatus(200);
-    // }
+            ])
+            ->patch(route('api.v1.articles.update', $article))
+            ->assertStatus(200);
+    }
 
 
     public function authenticade_users_cannot_update_others_articles()
@@ -67,7 +67,6 @@ class UpdateArticlesTest extends TestCase
                         'content' => 'Content changed',
                     ]
                 ]
-
             ])
             ->patch(route('api.v1.articles.update', $article))
             ->assertStatus(403);
@@ -77,47 +76,45 @@ class UpdateArticlesTest extends TestCase
 
 
 
-    // public function can_update_the_title_only()
-    // {
-    //     $article = factory(Article::class)->create();
+    public function can_update_the_title_only()
+    {
+        $article = factory(Article::class)->create();
 
-    //     Sanctum::actingAs($article->user);
-
-
-    //     $this->jsonApi()
-    //         ->content([
-    //             'data' => [
-    //                 'type' => 'articles',
-    //                 'id' => $article->getRouteKey(),
-    //                 'attributes' => [
-    //                     'title' => 'Title Changed',
-    //                 ]
-    //             ]
-
-    //         ])
-    //         ->patch(route('api.v1.articles.update', $article))
-    //         ->assertStatus(200);
-    // }
-
-    // public function can_update_the_slug_only()
-    // {
-    //     $article = factory(Article::class)->create();
-
-    //     Sanctum::actingAs($article->user);
+        Sanctum::actingAs($article->user);
 
 
-    //     $this->jsonApi()
-    //         ->content([
-    //             'data' => [
-    //                 'type' => 'articles',
-    //                 'id' => $article->getRouteKey(),
-    //                 'attributes' => [
-    //                     'slug' => 'slug-Changed',
-    //                 ]
-    //             ]
+        $this->jsonApi()
+            ->content([
+                'data' => [
+                    'type' => 'articles',
+                    'id' => $article->getRouteKey(),
+                    'attributes' => [
+                        'title' => 'Title Changed',
+                    ]
+                ]
+            ])
+            ->patch(route('api.v1.articles.update', $article))
+            ->assertStatus(200);
+    }
 
-    //         ])
-    //         ->patch(route('api.v1.articles.update', $article))
-    //         ->assertStatus(200);
-    // }
+    public function can_update_the_slug_only()
+    {
+        $article = factory(Article::class)->create();
+
+        Sanctum::actingAs($article->user);
+
+
+        $this->jsonApi()
+            ->content([
+                'data' => [
+                    'type' => 'articles',
+                    'id' => $article->getRouteKey(),
+                    'attributes' => [
+                        'slug' => 'slug-Changed',
+                    ]
+                ]
+            ])
+            ->patch(route('api.v1.articles.update', $article))
+            ->assertStatus(200);
+    }
 }
