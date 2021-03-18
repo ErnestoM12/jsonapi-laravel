@@ -16,7 +16,7 @@ class createArticlesTest extends TestCase
      */
 
 
-    public function guests_cannot_create_articles()
+    public function guests_users_cannot_create_articles()
     {
 
         $article = array_filter(factory(Article::class)->raw(['user_id' => null]));
