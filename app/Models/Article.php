@@ -26,7 +26,7 @@ class Article extends Model
     protected $casts = [
         'id' => 'integer',
         'category_id' => 'integer',
-        'user_id' => 'integer',
+        'user_id' => 'string',
     ];
 
 
