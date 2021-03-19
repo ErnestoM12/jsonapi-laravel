@@ -74,12 +74,12 @@ class FilterArticlesTest extends TestCase
   {
     factory(Article::class)->create([
       'title' => 'Article form febrary 2020',
-      'created_at' => now()->month(2)
+      'created_at' => now()->month(3)
     ]);
 
     factory(Article::class)->create([
       'title' => 'Article form febrary 2021',
-      'created_at' => now()->month(2)
+      'created_at' => now()->month(3)
     ]);
 
     factory(Article::class)->create([
