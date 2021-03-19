@@ -14,11 +14,11 @@ class FilterArticlesTest extends TestCase
    */
   public function can_filter_articles_by_title()
   {
-    factory(Article::class)->create([
+    Article::factory()->create([
       'title' => 'Aprende Laravel desde cero'
     ]);
 
-    factory(Article::class)->create([
+    Article::factory()->create([
       'title' => 'other Article'
     ]);
 
@@ -33,11 +33,11 @@ class FilterArticlesTest extends TestCase
 
   public function can_filter_articles_by_content()
   {
-    factory(Article::class)->create([
+    Article::factory()->create([
       'content' => '<div>Aprende Laravel desde cero</div>'
     ]);
 
-    factory(Article::class)->create([
+    Article::factory()->create([
       'content' => '<div>other Article</div>'
     ]);
 
@@ -52,12 +52,12 @@ class FilterArticlesTest extends TestCase
 
   public function can_filter_articles_by_year()
   {
-    factory(Article::class)->create([
+    Article::factory()->create([
       'title' => 'Article form 2020',
       'created_at' => now()->year(2020)
     ]);
 
-    factory(Article::class)->create([
+    Article::factory()->create([
       'title' => 'Article form 2021',
       'created_at' => now()->year(2021)
     ]);
@@ -72,17 +72,17 @@ class FilterArticlesTest extends TestCase
 
   public function can_filter_articles_by_month()
   {
-    factory(Article::class)->create([
+    Article::factory()->create([
       'title' => 'Article form febrary 2020',
       'created_at' => now()->month(3)
     ]);
 
-    factory(Article::class)->create([
+    Article::factory()->create([
       'title' => 'Article form febrary 2021',
       'created_at' => now()->month(3)
     ]);
 
-    factory(Article::class)->create([
+    Article::factory()->create([
       'title' => 'Article form January 2021',
       'created_at' => now()->month(1)
     ]);
@@ -110,17 +110,17 @@ class FilterArticlesTest extends TestCase
 
   public function can_search_articles_title_and_content()
   {
-    factory(Article::class)->create([
+    Article::factory()->create([
       'title' => 'Article form aprendible',
       'content' => 'Content'
     ]);
 
-    factory(Article::class)->create([
+    Article::factory()->create([
       'title' => 'Another Article',
       'content' => 'Content aprendible---'
     ]);
 
-    factory(Article::class)->create([
+    Article::factory()->create([
       'title' => 'Article',
       'content' => 'content 5'
     ]);
@@ -137,22 +137,22 @@ class FilterArticlesTest extends TestCase
 
   public function can_search_articles_title_and_content_whit_multiple_terms()
   {
-    factory(Article::class)->create([
+    Article::factory()->create([
       'title' => 'Article form aprendible',
       'content' => 'Content'
     ]);
 
-    factory(Article::class)->create([
+    Article::factory()->create([
       'title' => 'Another Article',
       'content' => 'Content aprendible---'
     ]);
 
-    factory(Article::class)->create([
+    Article::factory()->create([
       'title' => 'Another Laravel Article',
       'content' => 'Content'
     ]);
 
-    factory(Article::class)->create([
+    Article::factory()->create([
       'title' => 'Article',
       'content' => 'content 5'
     ]);

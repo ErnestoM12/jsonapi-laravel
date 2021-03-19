@@ -18,7 +18,7 @@ class ListaArticlesTest extends TestCase
         //unable error
         // $this->withoutExceptionHandling();
 
-        $articles = factory(Article::class)->times(3)->create();
+        $articles = Article::factory()->times(3)->create();
 
         $response =  $this->jsonApi()->get(route('api.v1.articles.index'));
 
@@ -79,7 +79,7 @@ class ListaArticlesTest extends TestCase
         //unable error
         //$this->withoutExceptionHandling();
 
-        $article = factory(Article::class)->create();
+        $article = Article::factory()->create();
 
         $response =  $this->jsonApi()->get(route('api.v1.articles.read', $article));
 
