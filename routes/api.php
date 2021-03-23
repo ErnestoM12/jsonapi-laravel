@@ -19,4 +19,5 @@ JsonApi::register('v1')->routes(function ($api) {
         $api->hasOne('authors')->except('replace');
     });
     $api->resource('authors')->only('index', 'read');
+    $api->resource('categories');
 });

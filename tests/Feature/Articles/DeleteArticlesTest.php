@@ -23,6 +23,9 @@ class DeleteArticlesTest extends TestCase
             ->assertStatus(401);
     }
 
+    /**
+     * @test
+     */
     public function authenticated_users_can_delete_their_articles()
     {
 
@@ -34,7 +37,9 @@ class DeleteArticlesTest extends TestCase
             ->assertStatus(204);
     }
 
-
+    /**
+     * @test
+     */
     public function authenticated_users_cannot_delete_other_articles()
     {
 

@@ -14,8 +14,6 @@ class createArticlesTest extends TestCase
     /**
      * @test
      */
-
-
     public function guests_users_cannot_create_articles()
     {
 
@@ -31,9 +29,9 @@ class createArticlesTest extends TestCase
         $this->assertDatabaseMissing('articles', $article);
     }
 
-
-
-
+    /**
+     * @test
+     */
     public function Authenticated_users_can_create_articles()
     {
         //create user
@@ -62,6 +60,9 @@ class createArticlesTest extends TestCase
         ]);
     }
 
+    /**
+     * @test
+     */
     public function title_is_required()
     {
         $article = Article::factory()->raw(['title' => '']);
@@ -80,6 +81,9 @@ class createArticlesTest extends TestCase
         $this->assertDatabaseMissing('articles', $article);
     }
 
+    /**
+     * @test
+     */
     public function content_is_required()
     {
         $article = Article::factory()->raw(['content' => '']);
@@ -96,6 +100,9 @@ class createArticlesTest extends TestCase
         $this->assertDatabaseMissing('articles', $article);
     }
 
+    /**
+     * @test
+     */
     public function slug_is_required()
     {
         $article = Article::factory()->raw(['slug' => '']);
@@ -112,7 +119,9 @@ class createArticlesTest extends TestCase
         $this->assertDatabaseMissing('articles', $article);
     }
 
-
+    /**
+     * @test
+     */
     public function slug_must_be_unique()
     {
         Article::factory()->create(['slug' => 'same-slug']);
@@ -131,6 +140,9 @@ class createArticlesTest extends TestCase
         $this->assertDatabaseMissing('articles', $article);
     }
 
+    /**
+     * @test
+     */
     public function slug_must_only_contain_letters_numbers_and_dashes()
     {
 
@@ -149,7 +161,9 @@ class createArticlesTest extends TestCase
         $this->assertDatabaseMissing('articles', $article);
     }
 
-
+    /**
+     * @test
+     */
     public function slug_must_not_contain_underscores()
     {
 
@@ -171,7 +185,9 @@ class createArticlesTest extends TestCase
         $this->assertDatabaseMissing('articles', $article);
     }
 
-
+    /**
+     * @test
+     */
     public function slug_must_not_start_with_dashes()
     {
         $article = Article::factory()->raw(['slug' => '-starts-with-dashes']);
@@ -191,6 +207,9 @@ class createArticlesTest extends TestCase
         $this->assertDatabaseMissing('articles', $article);
     }
 
+    /**
+     * @test
+     */
     public function slug_must_not_end_with_dashes()
     {
         $article = Article::factory()->raw(['slug' => 'end-with-dashes-']);
