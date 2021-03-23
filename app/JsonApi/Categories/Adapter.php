@@ -44,4 +44,9 @@ class Adapter extends AbstractAdapter
         $this->filterWithScopes($query, $filters);
     }
 
+    //define relations method
+    public function articles()
+    {
+        return $this->hasMany();
+    }
 }
