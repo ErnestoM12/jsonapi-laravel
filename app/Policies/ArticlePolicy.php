@@ -11,11 +11,7 @@ class ArticlePolicy
 
     public function create(User $user, $request)
     {
-        if ($request->json('data.relationships.authors')) {
-            return $user->id === $request->json('data.relationships.authors.data.id');
-        }
-
-        return true;
+        return $user->tokenCan('articles:create') && $user->id === $request->json('data.relationships.authors.data.id');
     }
 
 

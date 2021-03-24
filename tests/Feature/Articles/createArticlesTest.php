@@ -29,7 +29,6 @@ class createArticlesTest extends TestCase
 
         $this->assertDatabaseMissing('articles', $article);
     }
-
     /**
      * @test
      */
@@ -42,13 +41,12 @@ class createArticlesTest extends TestCase
 
         $article = array_filter(Article::factory()->raw([
             'category_id' => null,
-            'approved' => true //mass assigment check
         ]));
 
         //verify if don't  exists any article on database
         $this->assertDatabaseMissing('articles', $article);
 
-        Sanctum::actingAs($user);
+        Sanctum::actingAs($user, ['articles:create']);
 
 
         $this->jsonApi()->withData([
@@ -80,6 +78,47 @@ class createArticlesTest extends TestCase
             'slug' => $article['slug'],
             'content' => $article['content'],
         ]);
+    }
+
+
+
+    /**
+     * @test
+     */
+    public function Authenticated_users_cannot_create_articles_without_permissions()
+    {
+        //create user
+        $user = User::factory()->create();
+
+        $category = Category::factory()->create();
+
+        $article = Article::factory()->raw();
+
+
+        Sanctum::actingAs($user);
+
+
+        $this->jsonApi()->withData([
+            'type' => 'articles',
+            'attributes' =>  $article,
+            'relationships' => [
+                'authors' => [
+                    'data' => [
+                        'id' => $user->getRouteKey(),
+                        'type' => 'authors'
+                    ]
+                ],
+                'categories' => [
+                    'data' => [
+                        'id' => $category->getRouteKey(),
+                        'type' => 'categories'
+                    ]
+                ]
+            ]
+
+
+        ])->post(route('api.v1.articles.create'))
+            ->assertStatus(403);
     }
 
     /**
@@ -157,9 +196,6 @@ class createArticlesTest extends TestCase
 
         //$this->assertDatabaseMissing('articles', $article);
     }
-
-
-
 
     /**
      * @test
