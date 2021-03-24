@@ -43,7 +43,9 @@ class SortArticlesTest extends TestCase
         ]);
     }
 
-
+    /**
+     * @test
+     */
     public function it_can_articles_by_title_and_content()
     {
         Article::factory()->create([
@@ -79,7 +81,9 @@ class SortArticlesTest extends TestCase
         ]);
     }
 
-
+    /**
+     * @test
+     */
     public function it_cannot_sort_articles_by_title_unkonw_fields()
     {
         Article::factory()->times(3)->create();

@@ -3,6 +3,7 @@
 namespace Tests\Feature\Articles;
 
 use App\Models\Article;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
@@ -24,31 +25,50 @@ class UpdateArticlesTest extends TestCase
             ->assertStatus(401);
     }
 
+    /**
+     * @test
+     */
     public function authenticade_users_can_update_their_articles()
     {
         $article = Article::factory()->create();
 
-        Sanctum::actingAs($article->user);
+        $category = Category::factory()->create();
+
+        Sanctum::actingAs($user = $article->user);
 
 
-        $this->jsonApi()
-            ->content([
-                'data' => [
-                    'type' => 'articles',
-                    'id' => $article->getRouteKey(),
-                    'attributes' => [
-                        'title' => 'Title Changed',
-                        'slug' => ' title-changed',
-                        'content' => 'Content changed',
+        $this->jsonApi()->withData([
+
+            'type' => 'articles',
+            'id' => $article->getRouteKey(),
+            'attributes' => [
+                'title' => 'Title Changed',
+                'slug' => ' title-changed',
+                'content' => 'Content changed',
+            ],
+            'relationships' => [
+                'authors' => [
+                    'data' => [
+                        'id' => $user->getRouteKey(),
+                        'type' => 'authors'
+                    ]
+                ],
+                'categories' => [
+                    'data' => [
+                        'id' => $category->getRouteKey(),
+                        'type' => 'categories'
                     ]
                 ]
+            ]
 
-            ])
+
+        ])
             ->patch(route('api.v1.articles.update', $article))
             ->assertStatus(200);
     }
-
-
+    /**
+     * @test
+     */
     public function authenticade_users_cannot_update_others_articles()
     {
         $article = Article::factory()->create();
@@ -56,26 +76,23 @@ class UpdateArticlesTest extends TestCase
         Sanctum::actingAs($user = User::factory()->create());
 
 
-        $this->jsonApi()
-            ->content([
-                'data' => [
-                    'type' => 'articles',
-                    'id' => $article->getRouteKey(),
-                    'attributes' => [
-                        'title' => 'Title Changed',
-                        'slug' => ' title-changed',
-                        'content' => 'Content changed',
-                    ]
-                ]
-            ])
+        $this->jsonApi()->withData([
+
+            'type' => 'articles',
+            'id' => $article->getRouteKey(),
+            'attributes' => [
+                'title' => 'Title Changed',
+                'slug' => ' title-changed',
+                'content' => 'Content changed',
+            ]
+
+        ])
             ->patch(route('api.v1.articles.update', $article))
             ->assertStatus(403);
     }
-
-
-
-
-
+    /**
+     * @test
+     */
     public function can_update_the_title_only()
     {
         $article = Article::factory()->create();
@@ -83,20 +100,21 @@ class UpdateArticlesTest extends TestCase
         Sanctum::actingAs($article->user);
 
 
-        $this->jsonApi()
-            ->content([
-                'data' => [
-                    'type' => 'articles',
-                    'id' => $article->getRouteKey(),
-                    'attributes' => [
-                        'title' => 'Title Changed',
-                    ]
-                ]
-            ])
+        $this->jsonApi()->withData([
+
+            'type' => 'articles',
+            'id' => $article->getRouteKey(),
+            'attributes' => [
+                'title' => 'Title Changed',
+            ]
+
+        ])
             ->patch(route('api.v1.articles.update', $article))
             ->assertStatus(200);
     }
-
+    /**
+     * @test
+     */
     public function can_update_the_slug_only()
     {
         $article = Article::factory()->create();
@@ -104,16 +122,15 @@ class UpdateArticlesTest extends TestCase
         Sanctum::actingAs($article->user);
 
 
-        $this->jsonApi()
-            ->content([
-                'data' => [
-                    'type' => 'articles',
-                    'id' => $article->getRouteKey(),
-                    'attributes' => [
-                        'slug' => 'slug-Changed',
-                    ]
-                ]
-            ])
+        $this->jsonApi()->withData([
+
+            'type' => 'articles',
+            'id' => $article->getRouteKey(),
+            'attributes' => [
+                'slug' => 'slug-Changed',
+            ]
+
+        ])
             ->patch(route('api.v1.articles.update', $article))
             ->assertStatus(200);
     }

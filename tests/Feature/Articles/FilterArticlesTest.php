@@ -5,6 +5,7 @@ namespace Tests\Feature\Articles;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use App\Models\Article;
+use App\Models\Category;
 
 class FilterArticlesTest extends TestCase
 {
@@ -29,8 +30,9 @@ class FilterArticlesTest extends TestCase
       ->assertSee('Aprende Laravel desde cero')
       ->assertDontSee('other Article');
   }
-
-
+  /**
+   * @test
+   */
   public function can_filter_articles_by_content()
   {
     Article::factory()->create([
@@ -48,8 +50,9 @@ class FilterArticlesTest extends TestCase
       ->assertSee('Aprende Laravel desde cero')
       ->assertDontSee('other Article');
   }
-
-
+  /**
+   * @test
+   */
   public function can_filter_articles_by_year()
   {
     Article::factory()->create([
@@ -69,7 +72,9 @@ class FilterArticlesTest extends TestCase
       ->assertSee('Article form 2020')
       ->assertDontSee('Article form 2021');
   }
-
+  /**
+   * @test
+   */
   public function can_filter_articles_by_month()
   {
     Article::factory()->create([
@@ -95,9 +100,9 @@ class FilterArticlesTest extends TestCase
       ->assertSee('Article form febrary 2021')
       ->assertDontSee('Article form January 2021');
   }
-
-
-
+  /**
+   * @test
+   */
   public function can_filter_articles_by_unknow_filters()
   {
 
@@ -106,8 +111,9 @@ class FilterArticlesTest extends TestCase
 
     $this->jsonApi()->get($url)->assertStatus(400); //bad request
   }
-
-
+  /**
+   * @test
+   */
   public function can_search_articles_title_and_content()
   {
     Article::factory()->create([
@@ -133,8 +139,9 @@ class FilterArticlesTest extends TestCase
       ->assertSee('Another Article')
       ->assertDontSee('Article');
   }
-
-
+  /**
+   * @test
+   */
   public function can_search_articles_title_and_content_whit_multiple_terms()
   {
     Article::factory()->create([
@@ -165,5 +172,34 @@ class FilterArticlesTest extends TestCase
       ->assertSee('Another Article')
       ->assertSee('Another Laravel Article')
       ->assertDontSee('Article');
+  }
+
+  /** @test */
+  function can_filter_articles_by_category()
+  {
+    Article::factory()->count(2)->create();
+
+    $category = Category::factory()->hasArticles(2)->create();
+
+    $this->jsonApi()
+      ->filter(['categories' =>  $category->getRouteKey()])
+      ->get(route('api.v1.articles.index'))
+      ->assertJsonCount(2, 'data');
+  }
+
+  /** @test */
+  function can_filter_articles_by_multiple_categories()
+  {
+    Article::factory()->count(2)->create();
+
+    $category = Category::factory()->hasArticles(2)->create();
+    $category2 = Category::factory()->hasArticles(3)->create();
+
+    $this->jsonApi()
+      ->filter([
+        'categories' => $category->getRouteKey() . ',' . $category2->getRouteKey()
+      ])
+      ->get(route('api.v1.articles.index'))
+      ->assertJsonCount(5, 'data');
   }
 }

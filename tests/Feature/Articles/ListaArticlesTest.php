@@ -70,9 +70,9 @@ class ListaArticlesTest extends TestCase
         ]);
     }
 
-
-
-
+    /**
+     * @test
+     */
     public function can_fetch_single_article()
     {
 
