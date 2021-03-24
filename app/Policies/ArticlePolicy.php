@@ -9,6 +9,16 @@ class ArticlePolicy
 {
     use HandlesAuthorization;
 
+    //access admin
+    // public function before(User $user)
+    // {
+    //     if($user->tokenCan('articles:admin')){
+    //         return true;
+    //     }
+    // }
+
+
+
     public function create(User $user, $request)
     {
         return $user->tokenCan('articles:create') && $user->id === $request->json('data.relationships.authors.data.id');
@@ -17,11 +27,11 @@ class ArticlePolicy
 
     public function update(User $user, $article)
     {
-        return $article->user->is($user);
+        return $user->tokenCan('articles:update') && $article->user->is($user);
     }
 
     public function delete(User $user, $article)
     {
-        return $article->user->is($user);
+        return $user->tokenCan('articles:delete') &&  $article->user->is($user);
     }
 }
