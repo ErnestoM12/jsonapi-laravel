@@ -41,7 +41,7 @@ class Validators extends AbstractValidators
      *      the record being updated, or null if creating a resource.
      * @return mixed
      */
-    protected function rules($record, $data): array
+    protected function rules($record, array $data): array
     {
         //comm rules laravel
         return [

@@ -51,9 +51,6 @@ class Slug implements Rule
             return false;
         }
 
-
-
-
         return true;
     }
 

@@ -18,7 +18,7 @@
         "laravel/tinker": "^2.5"
     },
     "require-dev": {
-        "cloudcreativity/json-api-testing": "^3.2",
+        "cloudcreativity/json-api-testing": "^3.0",
         "facade/ignition": "^2.3.6",
         "fakerphp/faker": "^1.9.1",
         "laravel-shift/blueprint": "^1.22",
